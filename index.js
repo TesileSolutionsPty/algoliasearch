@@ -1,4 +1,4 @@
-import { liteClient as algoliasearch } from "algoliasearch/lite";
+import algoliasearch from "algoliasearch/lite";
 import instantsearch from "instantsearch.js";
 import {
   searchBox,
@@ -7,6 +7,47 @@ import {
   poweredBy,
 } from "instantsearch.js/es/widgets";
 import "instantsearch.css/themes/reset.css";
+
+// Initialize Algolia
+const searchClient = algoliasearch("18ZO40UVWY", "d3ee094323bd311dccdd54c7dbb933b6");
+
+const search = instantsearch({
+  indexName: "users",
+  searchClient,
+});
+
+// Add widgets
+search.addWidgets([
+  searchBox({
+    container: "#searchbox",
+  }),
+  hits({
+    container: "#hits",
+    templates: {
+      item: `
+        <div class="ais-Hits-item">
+          <picture>
+            <img src="{{image}}" alt="{{name}}" />
+          </picture>
+          <div>
+            <p class="primary-text">{{#helpers.highlight}}{ "attribute": "name" }{{/helpers.highlight}}</p>
+            <p class="secondary-text">{{#helpers.highlight}}{ "attribute": "description" }{{/helpers.highlight}}</p>
+            <p class="tertiary-text">{{price}}</p>
+          </div>
+        </div>
+      `,
+    },
+  }),
+  configure({
+    hitsPerPage: 10,
+  }),
+  poweredBy({
+    container: "#algolia-footer",
+  }),
+]);
+
+// Start the search
+search.start();
 
 // Add styles
 const styles = document.createElement("style");
@@ -74,7 +115,7 @@ styles.textContent = `
 
   .ais-Hits-item p {
     margin-bottom: 0.1rem;
-    word-break: break-all;
+    word-break: break-word;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -128,71 +169,3 @@ styles.textContent = `
   }
 `;
 document.head.appendChild(styles);
-
-// Query for any other node in which you want to display the search bar
-const searchBarContainer = document.querySelector("body");
-const searchBarNode = document.createElement("div");
-searchBarNode.setAttribute("class", "ais-InstantSearch");
-
-searchBarNode.innerHTML = `
-  <div id="searchbox"></div>
-  <div id="hits" class="hide-content"></div>
-  <div id="algolia-footer" class="hide-content"></div>
-`;
-
-searchBarContainer.prepend(searchBarNode);
-
-const searchClient = algoliasearch(
-  "18ZO40UVWY",
-  "d3ee094323bd311dccdd54c7dbb933b6",
-);
-
-const search = instantsearch({
-  indexName: "users",
-  searchClient,
-  onStateChange({ uiState, setUiState }) {
-    const hitsContainer = document.querySelector("#hits");
-    const footerContainer = document.querySelector("#algolia-footer");
-
-    if (!uiState["users"]?.query) {
-      hitsContainer.classList.add("hide-content");
-      footerContainer?.classList.add("hide-content");
-      setUiState(uiState);
-      return;
-    }
-
-    hitsContainer.classList.remove("hide-content");
-    footerContainer?.classList.remove("hide-content");
-    setUiState(uiState);
-  },
-});
-
-search.addWidgets([
-  searchBox({
-    container: "#searchbox",
-    placeholder: "Search your data here",
-  }),
-  configure({
-    hitsPerPage: 3,
-  }),
-  poweredBy({
-    container: "#algolia-footer",
-  }),
-  hits({
-    container: "#hits",
-    templates: {
-      item: (hit, { html, components }) => html`
-        <picture>
-				  <img src="${hit.photo_url}" />
-				</picture>
-				<div>
-				  <p class="primary-text">
-					  ${components.Highlight({ hit, attribute: "email" })}
-					</p>
-				</div>
-      `,
-    },
-  }),
-]);
-
-search.start();
