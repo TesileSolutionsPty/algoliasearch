@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algolia InstantSearch with Filters</title>
+    <title>Algolia InstantSearch</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css/themes/satellite.css">
 
     <style>
@@ -14,7 +14,7 @@
         }
 
         .ais-InstantSearch {
-            max-width: 900px;
+            max-width: 800px;
             margin: auto;
             padding: 20px;
             background: white;
@@ -24,7 +24,7 @@
 
         .filters {
             display: flex;
-            gap: 20px;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
@@ -85,10 +85,10 @@
 <body>
 
     <div id="searchbox"></div>
-    
+
     <div class="filters">
         <div id="refinement-list"></div>
-        <div id="clear-filters"></div>
+        <div id="numeric-menu"></div>
     </div>
 
     <div id="hits"></div>
@@ -103,7 +103,10 @@
         </div>
     </div>
 
+    <!-- FIX: Include Algolia before index.js -->
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
     <script src="index.js"></script>
+
 </body>
 </html>
