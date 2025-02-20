@@ -4,56 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algolia InstantSearch</title>
-
-    <!-- InstantSearch CSS (Prebuilt Styling) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css/themes/satellite.css">
-    
-    <!-- Custom Styling -->
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f4f9;
-        }
-
+        /* Basic styling */
         .ais-InstantSearch {
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
             padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
-
-        .ais-SearchBox {
-            margin-bottom: 20px;
-        }
-
-        .ais-Hits-item {
-            display: flex;
-            align-items: center;
+        .ais-SearchBox-input {
+            width: 100%;
             padding: 10px;
-            border-bottom: 1px solid #ddd;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-
-        .ais-Hits-item img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-right: 15px;
+        .ais-Hits-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
         }
-
         .ais-Hits-item h2 {
             margin: 0;
-            font-size: 1rem;
+            font-size: 18px;
+            color: #333;
         }
-
         .ais-Hits-item p {
             margin: 5px 0 0;
-            font-size: 0.9rem;
             color: #666;
         }
     </style>
@@ -61,48 +39,47 @@
 <body>
 
     <h1>Algolia InstantSearch</h1>
-
-    <div id="search-container" class="ais-InstantSearch">
-        <div id="searchbox"></div>
-        <div id="hits"></div>
-    </div>
-
-    <!-- Algolia Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+    
+    <div id="searchbox"></div>
+    <div id="hits"></div>
 
     <script>
-        const searchClient = algoliasearch('18ZO40UVWY', 'd3ee094323bd311dccdd54c7dbb933b6');
+        // Replace with your Algolia App ID & Search API Key
+        const searchClient = algoliasearch('YOUR_APP_ID', 'YOUR_SEARCH_ONLY_API_KEY');
 
         const search = instantsearch({
-            indexName: 'users',
+            indexName: 'YOUR_INDEX_NAME',
             searchClient,
         });
 
         search.addWidgets([
             instantsearch.widgets.searchBox({
                 container: '#searchbox',
-                placeholder: 'Search for products...',
+                placeholder: 'Search for a name...',
             }),
 
             instantsearch.widgets.hits({
                 container: '#hits',
                 templates: {
-                    item: (hit) => `
-                        <div class="ais-Hits-item">
-                            <img src="${hit.image || 'https://via.placeholder.com/60'}" alt="${hit.name}">
-                            <div>
-                                <h2>${hit.name || 'No Name'}</h2>
-                                <p>${hit.description || 'No Description'}</p>
+                    item(hit) {
+                        console.log(hit); // Debugging: See what fields exist in DevTools Console
+                        return `
+                            <div class="ais-Hits-item">
+                                <h2>${hit.FirstName || hit.first_name || 'No Name'}</h2>
+                                <p>${hit.Surname || hit.last_name || 'No Surname'}</p>
                             </div>
-                        </div>
-                    `,
+                        `;
+                    },
                 },
             }),
         ]);
 
         search.start();
     </script>
+
+    <!-- Algolia InstantSearch -->
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch/lite"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
 
 </body>
 </html>
