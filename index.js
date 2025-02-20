@@ -1,7 +1,7 @@
 const searchClient = algoliasearch('18ZO40UVWY', 'd3ee094323bd311dccdd54c7dbb933b6'); // Replace API Key if needed
 
 const search = instantsearch({
-    indexName: 'your_index_name',  // Replace with your actual Algolia index name
+    indexName: 'users',  // Replace with your actual Algolia index name
     searchClient,
 });
 
