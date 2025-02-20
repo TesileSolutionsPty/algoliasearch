@@ -1,39 +1,40 @@
-import { liteClient as algoliasearch } from "algoliasearch/lite";
-import instantsearch from "instantsearch.js";
-import { searchBox, hits, configure } from "instantsearch.js/es/widgets";
+// Initialize Algolia Search Client
+const searchClient = algoliasearch(
+  "18ZO40UVWY",  // Your Application ID
+  "d3ee094323bd311dccdd54c7dbb933b6"  // Your Search-Only API Key
+);
 
-// 🔹 Replace these with your Algolia credentials
-const searchClient = algoliasearch("18ZO40UVWY", "d3ee094323bd311dccdd54c7dbb933b6");
-
+// Create the InstantSearch Instance
 const search = instantsearch({
-  indexName: "users", // 🔹 Replace "users" with your actual index name
-  searchClient
+  indexName: "users",
+  searchClient,
 });
 
-// Search Box
+// Add Search Box
 search.addWidgets([
-  searchBox({
+  instantsearch.widgets.searchBox({
     container: "#searchbox",
-    placeholder: "Search for users..."
+    placeholder: "Search for users...",
   }),
 
-  hits({
+  // Add Hits (Results)
+  instantsearch.widgets.hits({
     container: "#hits",
     templates: {
       item(hit) {
         return `
           <div class="ais-Hits-item">
-            <h2>${hit.FirstName || "No Name"}</h2>
-            <p>${hit.Surname || "No Surname"}</p>
+            <img src="${hit.profilePicture || 'https://via.placeholder.com/60'}" alt="User Image">
+            <div>
+              <h2>${hit.FirstName || "No First Name"}</h2>
+              <p>${hit.Surname || "No Surname"}</p>
+            </div>
           </div>
         `;
-      }
-    }
+      },
+    },
   }),
-
-  configure({
-    hitsPerPage: 10
-  })
 ]);
 
+// Start InstantSearch
 search.start();
