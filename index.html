@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algolia InstantSearch</title>
 
-    <!-- InstantSearch Built-in Styling -->
+    <!-- InstantSearch CSS Theme -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css/themes/satellite.css">
-    
-    <!-- Custom Styling -->
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,24 +47,18 @@
             margin: 0;
             font-size: 1rem;
         }
-
-        .ais-Hits-item p {
-            margin: 0;
-            color: #555;
-        }
     </style>
 </head>
 <body>
-
     <div class="ais-InstantSearch">
         <h1>Algolia InstantSearch</h1>
         <div id="searchbox"></div>
         <div id="hits"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+    <!-- Algolia and InstantSearch -->
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.15.0/dist/algoliasearch.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.49.0"></script>
     <script src="index.js"></script>
-
 </body>
 </html>
