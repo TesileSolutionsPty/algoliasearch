@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algolia Search</title>
     
-    <!-- Algolia and InstantSearch.js -->
+    <!-- Correct CDN links -->
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css/themes/reset.css">
-
+    
     <style>
         .ais-InstantSearch {
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
-            box-shadow: 0 0 #0000, 0 0 #0000, 0px 0px 0px 1px rgba(35, 38, 59, 0.05), 0px 1px 3px 0px rgba(35, 38, 59, 0.15);
-            background-color: rgb(255 255 255);
             padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         #searchbox {
             margin-bottom: 20px;
@@ -28,7 +30,6 @@
     <div id="searchbox"></div>
     <div id="hits"></div>
     
-    <!-- Make sure to set type="module" -->
-    <script type="module" src="index.js"></script>
+    <script src="index.js"></script> <!-- Load JavaScript file -->
 </body>
 </html>
