@@ -1,50 +1,109 @@
-const searchClient = algoliasearch("18ZO40UVWY", "d3ee094323bd311dccdd54c7dbb933b6");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algolia InstantSearch</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css/themes/satellite.css">
 
-const search = instantsearch({
-    indexName: "users",
-    searchClient
-});
-
-search.addWidgets([
-    instantsearch.widgets.searchBox({
-        container: "#searchbox",
-        placeholder: "Search for users..."
-    }),
-
-    instantsearch.widgets.hits({
-        container: "#hits",
-        templates: {
-            item: (hit) => `
-                <div class="ais-Hits-item" onclick="openModal('${hit.FirstName}', '${hit.Surname}', '${hit.Email}', '${hit.profilePicture || 'default-avatar.png'}')">
-                    <img src="${hit.profilePicture || 'default-avatar.png'}" alt="Profile Picture">
-                    <div>
-                        <h2>${hit.FirstName} ${hit.Surname}</h2>
-                        <p>${hit.Email}</p>
-                    </div>
-                </div>
-            `
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
         }
-    })
-]);
 
-search.start();
+        .ais-InstantSearch {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-// Modal Functions
-function openModal(firstName, surname, email, profilePicture) {
-    document.getElementById("modalProfilePicture").src = profilePicture;
-    document.getElementById("modalName").textContent = `${firstName} ${surname}`;
-    document.getElementById("modalEmail").textContent = email;
-    document.getElementById("userModal").style.display = "block";
-}
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
 
-function closeModal() {
-    document.getElementById("userModal").style.display = "none";
-}
+        .ais-Hits-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
 
-// Close modal if user clicks outside of it
-window.onclick = function(event) {
-    const modal = document.getElementById("userModal");
-    if (event.target === modal) {
-        closeModal();
-    }
-};
+        .ais-Hits-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 50%;
+            text-align: center;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .modal img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="searchbox"></div>
+
+    <div class="filters">
+        <div id="refinement-list"></div>
+        <div id="numeric-menu"></div>
+    </div>
+
+    <div id="hits"></div>
+
+    <!-- Modal for User Details -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalProfilePicture" src="" alt="Profile Picture">
+            <h2 id="modalName"></h2>
+            <p id="modalEmail"></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+    <script src="index.js"></script>
+</body>
+</html>
