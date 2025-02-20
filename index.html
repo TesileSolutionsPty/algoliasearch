@@ -3,83 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algolia InstantSearch</title>
-    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
+    <title>Algolia Search</title>
+    
+    <!-- Algolia and InstantSearch.js -->
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch/lite"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css/themes/reset.css">
+
     <style>
-        /* Basic styling */
         .ais-InstantSearch {
             width: 100%;
             max-width: 800px;
             margin: 0 auto;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
             padding: 20px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .ais-SearchBox-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+
+        #hits {
+            padding: 1rem;
         }
+
         .ais-Hits-item {
+            border-bottom: 1px solid #ddd;
             padding: 10px;
-            border-bottom: 1px solid #eee;
         }
+
         .ais-Hits-item h2 {
             margin: 0;
             font-size: 18px;
-            color: #333;
         }
+
         .ais-Hits-item p {
-            margin: 5px 0 0;
-            color: #666;
+            margin: 5px 0;
+            color: gray;
         }
     </style>
 </head>
 <body>
-
     <h1>Algolia InstantSearch</h1>
     
     <div id="searchbox"></div>
     <div id="hits"></div>
-
-    <script>
-        // Replace with your Algolia App ID & Search API Key
-        const searchClient = algoliasearch('18ZO40UVWY', 'd3ee094323bd311dccdd54c7dbb933b6');
-
-        const search = instantsearch({
-            indexName: 'users',
-            searchClient,
-        });
-
-        search.addWidgets([
-            instantsearch.widgets.searchBox({
-                container: '#searchbox',
-                placeholder: 'Search for a name...',
-            }),
-
-            instantsearch.widgets.hits({
-                container: '#hits',
-                templates: {
-                    item(hit) {
-                        console.log(hit); // Debugging: See what fields exist in DevTools Console
-                        return `
-                            <div class="ais-Hits-item">
-                                <h2>${hit.FirstName || hit.first_name || 'No Name'}</h2>
-                                <p>${hit.Surname || hit.last_name || 'No Surname'}</p>
-                            </div>
-                        `;
-                    },
-                },
-            }),
-        ]);
-
-        search.start();
-    </script>
-
-    <!-- Algolia InstantSearch -->
-    <script src="https://cdn.jsdelivr.net/npm/algoliasearch/lite"></script>
-    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
-
+    
+    <script src="index.js"></script>
 </body>
 </html>
