@@ -3,49 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algolia Search</title>
-    
-    <!-- Algolia and InstantSearch.js -->
-    <script src="https://cdn.jsdelivr.net/npm/algoliasearch/lite"></script>
-    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css/themes/reset.css">
+    <title>Algolia InstantSearch</title>
 
+    <!-- InstantSearch Built-in Styling -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css/themes/satellite.css">
+    
+    <!-- Custom Styling -->
     <style>
-        .ais-InstantSearch {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
             padding: 20px;
-            background: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        #hits {
-            padding: 1rem;
+        .ais-InstantSearch {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .ais-SearchBox {
+            margin-bottom: 20px;
         }
 
         .ais-Hits-item {
-            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
             padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .ais-Hits-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
         }
 
         .ais-Hits-item h2 {
             margin: 0;
-            font-size: 18px;
+            font-size: 1rem;
         }
 
         .ais-Hits-item p {
-            margin: 5px 0;
-            color: gray;
+            margin: 0;
+            color: #555;
         }
     </style>
 </head>
 <body>
-    <h1>Algolia InstantSearch</h1>
-    
-    <div id="searchbox"></div>
-    <div id="hits"></div>
-    
+
+    <div class="ais-InstantSearch">
+        <h1>Algolia InstantSearch</h1>
+        <div id="searchbox"></div>
+        <div id="hits"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4"></script>
     <script src="index.js"></script>
+
 </body>
 </html>
