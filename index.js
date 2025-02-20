@@ -1,26 +1,35 @@
-// Initialize Algolia client
-const searchClient = algoliasearch("18ZO40UVWY", "d3ee094323bd311dccdd54c7dbb933b6");
+import algoliasearch from "algoliasearch/lite";
+import instantsearch from "instantsearch.js";
+import { searchBox, hits, configure, poweredBy } from "instantsearch.js/es/widgets";
 
-// Initialize InstantSearch.js
+// Initialize Algolia
+const searchClient = algoliasearch('18ZO40UVWY', 'd3ee094323bd311dccdd54c7dbb933b6');
+
 const search = instantsearch({
-    indexName: "users",
-    searchClient,
+  indexName: 'users',
+  searchClient,
 });
 
-// Add widgets
+// Add search widgets
 search.addWidgets([
-    instantsearch.widgets.searchBox({
-        container: "#searchbox",
-    }),
-
-    instantsearch.widgets.hits({
-        container: "#hits",
-        templates: {
-            item: (hit) => `<div>${hit.name}</div>`, // Adjust based on your data
-        },
-    }),
+  searchBox({
+    container: "#searchbox",
+    placeholder: "Search for products...",
+  }),
+  hits({
+    container: "#hits",
+    templates: {
+      item: (hit) => `
+        <div>
+          <strong>${hit.name}</strong><br>
+          ${hit.description}
+        </div>
+      `,
+    },
+  }),
+  poweredBy({
+    container: "#algolia-footer",
+  }),
 ]);
 
-// Start the search
 search.start();
-
