@@ -1,34 +1,30 @@
-// Initialize Algolia Search Client
+// Initialize Algolia Client
 const searchClient = algoliasearch(
-  "18ZO40UVWY",  // Your Application ID
-  "d3ee094323bd311dccdd54c7dbb933b6"  // Your Search-Only API Key
+  "18ZO40UVWY", // Replace with your Algolia App ID
+  "d3ee094323bd311dccdd54c7dbb933b6" // Replace with your Algolia Search API Key
 );
 
-// Create the InstantSearch Instance
+// Initialize InstantSearch
 const search = instantsearch({
-  indexName: "users",
+  indexName: "users", // Make sure this matches your Algolia index
   searchClient,
 });
 
-// Add Search Box
+// Add Search Box & Hits
 search.addWidgets([
   instantsearch.widgets.searchBox({
     container: "#searchbox",
-    placeholder: "Search for users...",
+    placeholder: "Search users...",
   }),
 
-  // Add Hits (Results)
   instantsearch.widgets.hits({
     container: "#hits",
     templates: {
       item(hit) {
         return `
           <div class="ais-Hits-item">
-            <img src="${hit.profilePicture || 'https://via.placeholder.com/60'}" alt="User Image">
-            <div>
-              <h2>${hit.FirstName || "No First Name"}</h2>
-              <p>${hit.Surname || "No Surname"}</p>
-            </div>
+            <h2>${hit.FirstName || "No First Name"}</h2>
+            <p>${hit.Surname || "No Surname"}</p>
           </div>
         `;
       },
@@ -36,5 +32,5 @@ search.addWidgets([
   }),
 ]);
 
-// Start InstantSearch
+// Start Search
 search.start();
