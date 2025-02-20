@@ -1,29 +1,20 @@
 import { liteClient as algoliasearch } from "algoliasearch/lite";
 import instantsearch from "instantsearch.js";
-import {
-  searchBox,
-  hits,
-  configure,
-  poweredBy,
-} from "instantsearch.js/es/widgets";
-import "instantsearch.css/themes/reset.css";
+import { searchBox, hits, configure } from "instantsearch.js/es/widgets";
 
-// Initialize Algolia search client
-const searchClient = algoliasearch("18ZO40UVWY", "d3ee094323bd311dccdd54c7dbb933b6");
+// 🔹 Replace these with your Algolia credentials
+const searchClient = algoliasearch("YOUR_APP_ID", "YOUR_SEARCH_ONLY_API_KEY");
 
 const search = instantsearch({
-  indexName: "users",
-  searchClient,
+  indexName: "users", // 🔹 Replace "users" with your actual index name
+  searchClient
 });
 
+// Search Box
 search.addWidgets([
   searchBox({
     container: "#searchbox",
-    placeholder: "Search for products...",
-  }),
-
-  configure({
-    hitsPerPage: 10,
+    placeholder: "Search for users..."
   }),
 
   hits({
@@ -31,24 +22,18 @@ search.addWidgets([
     templates: {
       item(hit) {
         return `
-          <div class="ais-Hits-item border-top">
-            <picture>
-              <img src="${hit.image || 'https://via.placeholder.com/96'}" alt="${hit.name}">
-            </picture>
-            <div>
-              <p class="primary-text">${hit.name || "No Name Available"}</p>
-              <p class="secondary-text">${hit.description || "No Description Available"}</p>
-              <p class="tertiary-text">$${hit.price || "N/A"}</p>
-            </div>
+          <div class="ais-Hits-item">
+            <h2>${hit.FirstName || "No Name"}</h2>
+            <p>${hit.Surname || "No Surname"}</p>
           </div>
         `;
-      },
-    },
+      }
+    }
   }),
 
-  poweredBy({
-    container: "#algolia-footer",
-  }),
+  configure({
+    hitsPerPage: 10
+  })
 ]);
 
 search.start();
